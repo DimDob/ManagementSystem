@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit} from '@angular/core';
 import {MatTableModule} from '@angular/material/table';
 import { Employee } from '../model/employee.model';
 import { CommonModule } from '@angular/common';
@@ -18,16 +18,17 @@ export class TableComponent implements OnInit {
 
   public ELEMENT_DATA: Employee[] = [];
 
+  cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.apiService.getAllEmployees().subscribe({
       next: (res) => {
-        this.ELEMENT_DATA.push(...res);
+        this.dataSource = res;
+        this.cdr.detectChanges();
       },
       error: (err) => console.error('Error fetching employee:', err)
     });
   }
-
 
   displayedColumns: string[] = [
     'id',
