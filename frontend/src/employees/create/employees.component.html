@@ -1,0 +1,58 @@
+<div class="employee-container">
+  <div class="header">
+    <h2>Create New Employee</h2>
+    
+    <button mat-raised-button color="primary" (click)="toggleForm()">
+      <mat-icon>person_add</mat-icon>
+      Create New Employee
+    </button>
+  </div>
+
+  @if (showForm) {
+    <mat-card class="employee-form-card">
+      <form (ngSubmit)="submitEmployee()" #employeeForm="ngForm">
+        <mat-form-field appearance="fill">
+          <mat-label>First Name</mat-label>
+          <input matInput name="name" [(ngModel)]="employee.name" required placeholder="Enter first name" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Surname</mat-label>
+          <input matInput name="surname" [(ngModel)]="employee.surname" required placeholder="Enter surname" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Department</mat-label>
+          <input matInput name="department" [(ngModel)]="employee.department" placeholder="Enter department" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Salary Currency</mat-label>
+          <input matInput name="salary" [(ngModel)]="employee.salary" placeholder="Enter salary currency" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Salary Amount</mat-label>
+          <input matInput type="number" name="salary_amount" [(ngModel)]="employee.salary_amount" placeholder="Enter salary amount" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="employee.email" placeholder="Enter email" />
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Phone Number</mat-label>
+          <input matInput name="employee_phone_number" [(ngModel)]="employee.employee_phone_number" placeholder="Enter phone number" />
+        </mat-form-field>
+
+        <div class="form-actions">
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+          <button mat-button type="button" (click)="toggleForm()">Cancel</button>
+        </div>
+      </form>
+    </mat-card>
+  }
+
+</div>
+

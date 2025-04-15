@@ -17,6 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/employees")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EmployeeController {
 
     @Value("${API_KEY}")
