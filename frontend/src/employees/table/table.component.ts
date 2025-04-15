@@ -35,8 +35,6 @@ export class TableComponent implements OnInit {
     'name',
     'surname',
     'department',
-    'salary',
-    'salary_amount',
     'email',
     'employee_phone_number'
   ];

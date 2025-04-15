@@ -6,7 +6,7 @@ import { EmployeeService } from '../employees/service/employee.service';
 
 
 @Component({
-  selector: 'employee-table',
+  selector: 'salaries-table',
   standalone: true,
   imports: [CommonModule, MatTableModule],
   templateUrl: 'salaries.component.html',
