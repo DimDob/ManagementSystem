@@ -1,12 +1,14 @@
-<section>
-  <div class="button-row">
-    <div class="flex-container">
-      <div class="button-container">
-        <button mat-fab extended (click)="exportAsCSV()">
-          <mat-icon>download</mat-icon>
-          Export as CSV
-        </button>
+@if (employees) {
+  <section>
+    <div class="button-row">
+      <div class="flex-container">
+        <div class="button-container">
+          <button mat-fab extended (click)="exportAsCSV()">
+            <mat-icon>download</mat-icon>
+            Export as CSV
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+}
