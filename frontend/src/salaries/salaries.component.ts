@@ -3,6 +3,8 @@ import {MatTableModule} from '@angular/material/table';
 import { CommonModule } from '@angular/common';
 import { Employee } from '../employees/model/employee.model';
 import { EmployeeService } from '../employees/service/employee.service';
+import { displayedColumns } from './salaries-table-data.ts/salaries-table-data';
+import { SalaryService } from './service/salary.service';
 
 
 @Component({
@@ -14,29 +16,26 @@ import { EmployeeService } from '../employees/service/employee.service';
 })
 export class SalariesComponent implements OnInit {
 
-  apiService = inject(EmployeeService);
+  public displayedColumns: string[] = displayedColumns;
 
   public ELEMENT_DATA: Employee[] = [];
+
+  employeeService = inject(EmployeeService);
+
+  salaryService = inject(SalaryService);
 
   cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
-    this.apiService.getAllEmployees().subscribe({
-      next: (res) => {
-        this.dataSource = res;
+    this.employeeService.getAllEmployees().subscribe({
+      next: (employeeData) => {
+        this.dataSource = employeeData;
         this.cdr.detectChanges();
+        this.salaryService.employeeDataSubject.next(employeeData);
       },
       error: () => alert('Error fetching employees')
     });
   }
-
-  displayedColumns: string[] = [
-    'name',
-    'surname',
-    'department',
-    'salary',
-    'salary_amount'
-  ];
 
   dataSource = this.ELEMENT_DATA;
 }
