@@ -1,0 +1,20 @@
+
+<div class="employee-container">
+  <div class="header">
+    <h2>Delete an existing employee</h2>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Enter Employee ID</mat-label>
+      <input matInput [(ngModel)]="sharedService.employee.id" placeholder="Enter employee ID" />
+    </mat-form-field>
+
+    @if (sharedService.employee.id) {
+      <button mat-raised-button color="primary" (click)="deleteEmployee()">
+        <mat-icon>person_add</mat-icon>
+        Delete the existing employee
+      </button>
+    }
+
+  </div>
+
+</div>

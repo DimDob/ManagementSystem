@@ -1,6 +1,6 @@
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { EmployeeService } from '../service/employee.service';
@@ -8,6 +8,7 @@ import { Employee } from '../model/employee.model';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditComponent } from "../edit/edit/edit.component";
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'employees',
@@ -15,49 +16,34 @@ import { EditComponent } from "../edit/edit/edit.component";
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.css'
 })
-export class EmployeesComponent {
-
-  apiService = inject(EmployeeService);
+export class EmployeesComponent  implements OnInit, OnDestroy {
 
   showForm = false;
 
-  employee: Employee = {
-    name: '',
-    surname: '',
-    department: '',
-    salary: '',
-    salary_amount: 0,
-    email: '',
-    employee_phone_number: ''
-  };
+  apiService = inject(EmployeeService);
 
+  sharedService = inject(SharedService);
 
-  toggleForm() {
-    this.showForm = !this.showForm;
+  ngOnInit(): void {
+    this.sharedService.toggleFormObservable.subscribe(show => {
+      this.showForm = show;
+    });
+
+  }
+
+  ngOnDestroy(): void {
+      this.sharedService.toggleFormSubject.unsubscribe();
   }
 
   submitEmployee() {
-    this.apiService.createEmployee(this.employee).subscribe({
+    this.apiService.createEmployee(this.sharedService.employee).subscribe({
       next: (res) => {
-        console.log('Employee created:', res);
-        this.toggleForm();
-        this.resetForm();
+        this.sharedService.toggleForm();
+        this.sharedService.resetForm();
+        alert(res);
       },
-      error: (err) => console.error('Error creating employee:', err)
+      error: () => alert('Error creating employee')
     });
   }
 
-
-
-  resetForm() {
-    this.employee = {
-      name: '',
-      surname: '',
-      department: '',
-      salary: '',
-      salary_amount: 0,
-      email: '',
-      employee_phone_number: ''
-    };
-  }
 }

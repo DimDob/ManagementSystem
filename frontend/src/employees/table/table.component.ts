@@ -26,7 +26,7 @@ export class TableComponent implements OnInit {
         this.dataSource = res;
         this.cdr.detectChanges();
       },
-      error: (err) => console.error('Error fetching employee:', err)
+      error: () => alert('Error fetching employees')
     });
   }
 

@@ -1,75 +1,48 @@
-import { Component, inject, output } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { Employee } from '../../model/employee.model';
 import { EmployeeService } from '../../service/employee.service';
+import { SharedService } from '../../service/shared.service';
 
 @Component({
   selector: 'edit-employee',
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css'],
-  imports: [MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatCardModule, MatIconModule, MatFormFieldModule, FormsModule, EditComponent],
+  providers: [EmployeeService, SharedService],
+  imports: [MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatCardModule, MatIconModule, MatFormFieldModule, FormsModule],
 })
-export class EditComponent {
+export class EditComponent implements OnInit, OnDestroy {
 
   showForm: boolean = false;
 
-  employeeId: string = ''
-
-  employeeIdOnChange = output<string>();
-
-  employee: Employee = {
-    name: '',
-    surname: '',
-    department: '',
-    salary: '',
-    salary_amount: 0,
-    email: '',
-    employee_phone_number: ''
-  };
-
   apiService = inject(EmployeeService);
 
+  sharedService = inject(SharedService);
 
-  toggleForm() {
-    this.showForm = !this.showForm;
+  ngOnInit(): void {
+    this.sharedService.toggleFormObservable.subscribe(show => {
+      this.showForm = show;
+    });
+
   }
 
-  resetForm() {
-    this.employee = {
-      name: '',
-      surname: '',
-      department: '',
-      salary: '',
-      salary_amount: 0,
-      email: '',
-      employee_phone_number: ''
-    };
+  ngOnDestroy(): void {
+      this.sharedService.toggleFormSubject.unsubscribe();
   }
-
 
   submitEmployee() {
-    this.apiService.updateEmployeeSalary(this.employeeId, this.employee).subscribe({
-      next: () => {
-        this.toggleForm();
-        this.resetForm();
+    this.apiService.updateEmployeeSalary(this.sharedService.employee.id, this.sharedService.employee).subscribe({
+      next: (res) => {
+        this.sharedService.toggleForm();
+        this.sharedService.resetForm();
+        alert(res);
       },
-      error: (err) => console.error('Error fetching employee:', err)
+      error: () => alert(`Error fetching employee with id ${this.sharedService.employee.id}`)
     });
   }
 
-  deleteEmployee() {
-    this.apiService.deleteById(this.employeeId).subscribe({
-      next: () => {
-        this.toggleForm();
-        this.resetForm();
-      },
-      error: (err) => console.error('Error fetching employee:', err)
-    });
-
-  }
 }
