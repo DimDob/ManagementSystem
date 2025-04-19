@@ -8,6 +8,4 @@ import { ExportComponent } from "../export/export.component";
   templateUrl: './main-salaries-component.component.html',
   styleUrl: './main-salaries-component.component.css'
 })
-export class MainSalariesComponentComponent {
-
-}
+export class MainSalariesComponentComponent {}
