@@ -5,6 +5,7 @@ import { Employee } from '../employees/model/employee.model';
 import { EmployeeService } from '../employees/service/employee.service';
 import { displayedColumns } from './salaries-table-data.ts/salaries-table-data';
 import { SalaryService } from './service/salary.service';
+import { BaseTableComponent } from '../base-table/base-table.component';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { SalaryService } from './service/salary.service';
   templateUrl: 'salaries.component.html',
   styleUrl: 'salaries.component.css',
 })
-export class SalariesComponent implements OnInit {
+export class SalariesComponent extends BaseTableComponent implements OnInit {
 
   public displayedColumns: string[] = displayedColumns;
 
@@ -24,17 +25,17 @@ export class SalariesComponent implements OnInit {
 
   salaryService = inject(SalaryService);
 
-  cdr = inject(ChangeDetectorRef);
 
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.employeeService.getAllEmployees().subscribe({
       next: (employeeData) => {
         this.dataSource = employeeData;
-        this.cdr.detectChanges();
         this.salaryService.employeeDataSubject.next(employeeData);
       },
       error: () => alert('Error fetching employees')
     });
+
+    super.ngOnInit();
   }
 
   dataSource = this.ELEMENT_DATA;

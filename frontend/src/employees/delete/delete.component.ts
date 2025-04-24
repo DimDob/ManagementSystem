@@ -1,5 +1,5 @@
 import { SharedService } from './../service/shared.service';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { EmployeeService } from '../service/employee.service';
+import { BaseEmployeeComponent } from '../../base-employee/base-employee.component';
 
 @Component({
   selector: 'delete-employee',
@@ -16,24 +17,7 @@ import { EmployeeService } from '../service/employee.service';
   templateUrl: './delete.component.html',
   styleUrl: './delete.component.css'
 })
-export class DeleteComponent implements OnInit, OnDestroy {
-
-  showForm: boolean = false;
-
-  apiService = inject(EmployeeService);
-
-  sharedService = inject(SharedService);
-
-  ngOnInit(): void {
-    this.sharedService.toggleFormObservable.subscribe(show => {
-      this.showForm = show;
-    });
-
-  }
-
-  ngOnDestroy(): void {
-    this.sharedService.toggleFormSubject.unsubscribe();
-  }
+export class DeleteComponent extends BaseEmployeeComponent implements OnInit, OnDestroy {
 
   deleteEmployee() {
     this.apiService.deleteById(this.sharedService.employee.id).subscribe({

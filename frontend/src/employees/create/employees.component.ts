@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { EditComponent } from "../edit/edit/edit.component";
 import { SharedService } from '../service/shared.service';
+import { BaseEmployeeComponent } from '../../base-employee/base-employee.component';
 
 @Component({
   selector: 'employees',
@@ -16,24 +17,7 @@ import { SharedService } from '../service/shared.service';
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.css'
 })
-export class EmployeesComponent  implements OnInit, OnDestroy {
-
-  showForm = false;
-
-  apiService = inject(EmployeeService);
-
-  sharedService = inject(SharedService);
-
-  ngOnInit(): void {
-    this.sharedService.toggleFormObservable.subscribe(show => {
-      this.showForm = show;
-    });
-
-  }
-
-  ngOnDestroy(): void {
-      this.sharedService.toggleFormSubject.unsubscribe();
-  }
+export class EmployeesComponent extends BaseEmployeeComponent implements OnInit, OnDestroy {
 
   submitEmployee() {
     this.apiService.createEmployee(this.sharedService.employee).subscribe({

@@ -29,7 +29,6 @@ body {
   margin-top: 20px;
 }
 
-
 .header {
   display: flex;
   justify-content: space-between;
@@ -72,15 +71,6 @@ mat-card.employee-form-card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
-mat-form-field {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-mat-form-field mat-label {
-  font-size: 14px;
-  color: #555;
-}
 
 mat-form-field input {
   font-size: 14px;
@@ -95,10 +85,9 @@ mat-form-field input:focus {
   outline: none;
 }
 
-
 .form-actions {
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
   margin-top: 20px;
 }
 
@@ -126,7 +115,6 @@ mat-form-field input:focus {
 .form-actions button[type="button"]:hover {
   background-color: #bdbdbd;
 }
-
 
 @media (max-width: 600px) {
   .employee-container {

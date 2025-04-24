@@ -4,6 +4,7 @@ import {MatTableModule} from '@angular/material/table';
 import { Employee } from '../model/employee.model';
 import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../service/employee.service';
+import { BaseTableComponent } from '../../base-table/base-table.component';
 
 @Component({
   selector: 'employee-table',
@@ -12,7 +13,7 @@ import { EmployeeService } from '../service/employee.service';
   templateUrl: 'table.component.html',
   styleUrl: 'table.component.css',
 })
-export class TableComponent implements OnInit {
+export class TableComponent  extends BaseTableComponent  implements OnInit {
 
   public displayedColumns: string[] = displayedColumns;
 
@@ -20,13 +21,10 @@ export class TableComponent implements OnInit {
 
   apiService = inject(EmployeeService);
 
-  cdr = inject(ChangeDetectorRef);
-
-  ngOnInit(): void {
+  override ngOnInit(): void {
     this.apiService.getAllEmployees().subscribe({
       next: (res) => {
         this.dataSource = res;
-        this.cdr.detectChanges();
       },
       error: () => alert('Error fetching employees')
     });

@@ -41,7 +41,6 @@ export class SharedService {
   public toggleForm() {
     this.showForm = !this.showForm;
     this.toggleFormSubject.next(this.showForm);
-
   }
 
   public resetForm() {

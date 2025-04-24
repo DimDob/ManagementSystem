@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { EmployeeService } from '../../service/employee.service';
 import { SharedService } from '../../service/shared.service';
+import { BaseEmployeeComponent } from '../../../base-employee/base-employee.component';
 
 @Component({
   selector: 'edit-employee',
@@ -15,24 +16,7 @@ import { SharedService } from '../../service/shared.service';
   providers: [EmployeeService, SharedService],
   imports: [MatDialogModule, MatButtonModule, MatIconModule, MatCardModule, MatCardModule, MatIconModule, MatFormFieldModule, FormsModule],
 })
-export class EditComponent implements OnInit, OnDestroy {
-
-  showForm: boolean = false;
-
-  apiService = inject(EmployeeService);
-
-  sharedService = inject(SharedService);
-
-  ngOnInit(): void {
-    this.sharedService.toggleFormObservable.subscribe(show => {
-      this.showForm = show;
-    });
-
-  }
-
-  ngOnDestroy(): void {
-      this.sharedService.toggleFormSubject.unsubscribe();
-  }
+export class EditComponent extends BaseEmployeeComponent implements OnInit, OnDestroy {
 
   submitEmployee() {
     this.apiService.updateEmployeeSalary(this.sharedService.employee.id, this.sharedService.employee).subscribe({
