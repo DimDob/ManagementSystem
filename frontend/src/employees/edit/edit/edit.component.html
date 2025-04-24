@@ -1,22 +1,30 @@
+
 <div class="employee-container">
-  <div class="header">
-    <h2>Edit an existing employee</h2>
+  @if (!showForm) {
+    <div class="header">
+      @if (!sharedService.employee.id) {
+        <h2>Edit an existing employee</h2>
+      }
 
-    <mat-form-field appearance="fill">
-      <mat-label>Enter Employee ID</mat-label>
-      <input matInput [(ngModel)]="sharedService.employee.id" placeholder="Enter employee ID" />
-    </mat-form-field>
+      <mat-form-field appearance="fill" class="mat-mdc-form-field-infix">
+        <mat-label>Enter Employee ID</mat-label>
+        <input matInput [(ngModel)]="sharedService.employee.id" placeholder="Enter employee ID" />
+      </mat-form-field>
 
-    @if (sharedService.employee.id) {
-      <button mat-raised-button color="primary" (click)="sharedService.prefillEmployeeForm(sharedService.employee.id)">
-        <mat-icon>person_add</mat-icon>
-        Edit an existing employee
-      </button>
-    }
+      @if (sharedService.employee.id) {
+        <button mat-raised-button color="primary" (click)="sharedService.prefillEmployeeForm(sharedService.employee.id)">
+          <mat-icon>person_add</mat-icon>
+          Edit an existing employee
+        </button>
+      }
 
-  </div>
+    </div>
+  }
 
   @if (showForm && sharedService.employee.id) {
+    <div class="header">
+      <h2>Editing employee {{sharedService.employee.name}}</h2>
+    </div>
 
   <div >
     <mat-card class="employee-form-card">

@@ -1,7 +1,9 @@
 
 <div class="employee-container">
   <div class="header">
+    @if (!sharedService.employee.id) {
     <h2>Delete an existing employee</h2>
+    }
 
     <mat-form-field appearance="fill">
       <mat-label>Enter Employee ID</mat-label>
