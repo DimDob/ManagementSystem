@@ -1,6 +1,5 @@
 package com.example.CashDeskModule.Service;
 
-import com.example.CashDeskModule.Entity.AuthToken;
 import com.example.CashDeskModule.Repository.AuthTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,4 +25,5 @@ public class AuthServiceImpl implements AuthService {
             return Optional.empty();
         }
     }
+
 }

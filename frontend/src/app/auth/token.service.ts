@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from './environment';
 import { HttpClient } from '@angular/common/http';
-import { first, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -33,15 +33,4 @@ export class TokenService {
     sessionStorage.removeItem(this.tokenKey);
   }
 
-
-  public initializeToken(): void {
-    this.requestToken().pipe(
-      first()
-    ).subscribe({
-      next: (token) => this.setToken(token),
-      error: (error) => {
-        console.error('Failed to fetch token during app init', error);
-      }
-    });
-  }
 }

@@ -37,7 +37,6 @@ public class EmployeeServiceImpl implements EmployeeService {
         return Optional.of(saved);
     }
 
-
     @Override
     public Optional<List<Employee>> getAllEmployees() {
         List<Employee> all = employeeServiceRepository.findAll();
