@@ -25,7 +25,7 @@ export class EmployeeService {
 
   public updateEmployeeSalary(id: string, employee: Employee): Observable<string> {
     return this.http.put<string>(
-      `${this.environment.host}//${id}`,
+      `${this.environment.host}${this.endpoint}/${id}`,
       employee,
       { responseType: 'text' as 'json' }
     );
