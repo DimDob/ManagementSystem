@@ -10,7 +10,4 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface EmployeeServiceRepository extends JpaRepository<Employee, UUID> {
-
-    Optional<Employee> getEmployeeById(UUID id);
-}
+public interface EmployeeServiceRepository extends JpaRepository<Employee, UUID> {}
