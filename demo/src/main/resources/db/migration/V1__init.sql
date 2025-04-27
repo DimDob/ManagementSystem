@@ -15,3 +15,7 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(255) NOT NULL,
     is_admin VARCHAR(10)
 );
+
+CREATE TABLE IF NOT EXISTS auth_token (
+    token VARCHAR(500) PRIMARY KEY NOT NULL
+);

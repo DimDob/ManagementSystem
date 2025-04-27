@@ -13,12 +13,8 @@ Database Creation: Before running the application, you must manually create a da
 Persistence and Reliability
 Non-Volatile Storage: Using PostgreSQL ensures that transaction data is stored in a non-volatile manner. Storing transaction data in an instance attribute of a service class would mean the data is only temporarily held in memory. This approach is volatile, as the data would be lost when the application is stopped or if it encounters an error.
 ### Requests payload
-Info about each payload can be found in the Postman directory.
+Info about each payload can be found in the Postman directory. You can also find the API definition here. I've documented every single request: http://localhost:8080/swagger-ui.html
 ### Data Integrity and Tracking
 Security and scalability: PostgreSQL can handle large volumes of data and concurrent transactions, making it suitable for applications that might scale up in terms of data size and user load. Transactions are usually paged in the database, because they are structured.
-### Output File - transactions.txt
-This file contains history of each salary transaction made by/for the employee (salary deposit or withdrawal).
-### Output File - balance_and_denominations.txt
-This file contains the salary amount in each of the following currencies (BGN or EUR) and the denominations for the account of the employee. 
 ## Note 
 Please ensure that your PostgreSQL server is running and accessible before launching the application, and follow the database creation instructions as outlined above. The DB name must equal the dataSource url name - "Employee Management System".

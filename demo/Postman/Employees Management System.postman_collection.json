@@ -1,0 +1,299 @@
+{
+	"info": {
+		"_postman_id": "83968807-7fc9-4b78-9695-bd53bd5b5e01",
+		"name": "Employees Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25482732"
+	},
+	"item": [
+		{
+			"name": "employees",
+			"item": [
+				{
+					"name": "save employee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Doe\",\r\n  \"department\": \"Sales\",\r\n  \"salary\": \"EUR\",\r\n  \"salary_amount\": 5000,\r\n  \"email\": \"john.doe@example.com\",\r\n  \"employee_phone_number\": \"+1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Employee",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/4c9100ed-af8c-4c7c-b2a0-f14d4f9f5937",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"4c9100ed-af8c-4c7c-b2a0-f14d4f9f5937"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all employees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees"
+							],
+							"query": [
+								{
+									"key": "FIB-X-AUTH",
+									"value": "f9Uie8nNf112hx8s",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get employee by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update employee by id",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "department",
+			"item": [
+				{
+					"name": "get department of employee by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/department/employee/d36f4776-7c8d-4483-96f7-72824019d755",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"department",
+								"employee",
+								"d36f4776-7c8d-4483-96f7-72824019d755"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "get auth token",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"admin@gmail.com\",\r\n  \"password\": \"adminpassword\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "reset password",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "salary",
+			"item": [
+				{
+					"name": "get employee salary",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "update employee salary",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "FIB-X-AUTH",
+								"value": "f9Uie8nNf112hx8s",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"John\",\r\n  \"surname\": \"Doe\",\r\n  \"department\": \"Sales\",\r\n  \"salary\": \"EUR\",\r\n  \"salary_amount\": 99000,\r\n  \"email\": \"john.doe@example.com\",\r\n  \"employee_phone_number\": \"+1234567890\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/employees/4c9100ed-af8c-4c7c-b2a0-f14d4f9f5937",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"employees",
+								"4c9100ed-af8c-4c7c-b2a0-f14d4f9f5937"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

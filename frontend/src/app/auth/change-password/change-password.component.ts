@@ -47,7 +47,7 @@ export class ChangePasswordComponent implements OnInit {
     return newPass === confirmPass ? null : { mismatch: true };
   }
 
-  public onSubmit(): void {
+  public onSubmit() {
     if (this.resetPasswordForm.valid && this.token) {
 
       const passwordData = {
@@ -57,7 +57,6 @@ export class ChangePasswordComponent implements OnInit {
 
       this.changePasswordService.changePassword(passwordData).subscribe({
         next: () => {
-          alert("Password changed successfully!");
           this.ngZone.run(() => {
             this.router.navigate(["/auth/login"]);
           });

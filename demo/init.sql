@@ -1,2 +1,1 @@
-CREATE DATABASE CashDeskModule;
---This file will instantiate a DB called CashDeskModule, unfortunately it's accessible only in IJ Idea Ultimate and i use Community edition. In this case you must create the DB manually.
+CREATE DATABASE IF NOT EXISTS CashDeskModule;
