@@ -9,10 +9,10 @@
 		<relativePath/>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>CashDeshModule</artifactId>
+	<artifactId>EmployeeManagementSystem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>CashDeskModule</name>
-	<description>CASH-DESH-MODULE</description>
+	<name>EmployeeManagementSystem</name>
+	<description>EmployeeManagementSystem</description>
 	<properties>
 		<java.version>19</java.version>
 	</properties>
@@ -149,7 +149,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<url>jdbc:postgresql://localhost:5432/CashDeskModule</url>
+					<url>jdbc:postgresql://localhost:5432/EmployeeManagementSystem</url>
 					<user>postgres</user>
 					<password>postgres</password>
 					<cleanDisabled>false</cleanDisabled>

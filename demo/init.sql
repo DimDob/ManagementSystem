@@ -1,1 +1,1 @@
-CREATE DATABASE IF NOT EXISTS CashDeskModule;
+CREATE DATABASE IF NOT EXISTS EmployeeManagementSystem;

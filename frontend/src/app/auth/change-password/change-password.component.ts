@@ -57,6 +57,7 @@ export class ChangePasswordComponent implements OnInit {
 
       this.changePasswordService.changePassword(passwordData).subscribe({
         next: () => {
+          alert("Password changed successfully");
           this.ngZone.run(() => {
             this.router.navigate(["/auth/login"]);
           });
