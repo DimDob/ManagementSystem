@@ -3,6 +3,7 @@ package com.example.CashDeskModule.Entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 import java.util.UUID;
 
@@ -19,6 +20,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Setter
     @Column(name = "password")
     private String password;
 
@@ -36,4 +38,5 @@ public class User {
     public String getEmail() {
         return email;
     }
+
 }

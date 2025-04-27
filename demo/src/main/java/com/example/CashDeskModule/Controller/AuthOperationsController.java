@@ -1,8 +1,8 @@
 package com.example.CashDeskModule.Controller;
 
-import com.example.CashDeskModule.Entity.EmailRequest;
-import com.example.CashDeskModule.Entity.Employee;
-import com.example.CashDeskModule.Entity.LoginRequest;
+import com.example.CashDeskModule.DTO.ChangePasswordRequest;
+import com.example.CashDeskModule.DTO.EmailRequest;
+import com.example.CashDeskModule.DTO.LoginRequest;
 import com.example.CashDeskModule.Entity.User;
 import com.example.CashDeskModule.Service.AuthServiceImpl;
 import com.example.CashDeskModule.Service.UserServiceImpl;
@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.naming.AuthenticationException;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -62,10 +60,11 @@ public class AuthOperationsController {
             return userService.forgotPassword(email);
     }
 
-//    @PutMapping("/change-password")
-//    public ResponseEntity<UUID> changePassword(@Valid @RequestBody NewPassword newPassword) {
-//        return userService.changePassword(newPassword);
-//    }
-
+    @PutMapping("/change-password")
+    public ResponseEntity<UUID> changePassword(@Valid @RequestBody ChangePasswordRequest changePasswordRequest) {
+        return userService.changePassword(changePasswordRequest.getId(), changePasswordRequest.getNewPassword())
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
+    }
 
 }

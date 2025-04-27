@@ -1,4 +1,4 @@
-package com.example.CashDeskModule.Entity;
+package com.example.CashDeskModule.DTO;
 
 import lombok.Getter;
 

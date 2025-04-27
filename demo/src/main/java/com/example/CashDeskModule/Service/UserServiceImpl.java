@@ -1,6 +1,6 @@
 package com.example.CashDeskModule.Service;
 
-import com.example.CashDeskModule.Entity.EmailRequest;
+import com.example.CashDeskModule.DTO.EmailRequest;
 import com.example.CashDeskModule.Entity.User;
 import com.example.CashDeskModule.Repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -66,13 +66,12 @@ public class UserServiceImpl implements UserService {
         Optional<User> existingUser = userRepository.findUserByEmail(email.getEmail());
 
         if (existingUser.isPresent()) {
-            String userPassword = existingUser.get().getPassword();
 
-            String resetToken = UUID.randomUUID().toString();
+            String userUUID = String.valueOf(existingUser.get().getId());
 
             String subject = "Password Reset Request";
 
-            String resetLink = "http://localhost:4200/auth/change-password?token=" + resetToken;
+            String resetLink = "http://localhost:4200/auth/change-password?token=" + userUUID;
 
             String body = "Click the following link to reset your password: " + resetLink;
 
@@ -84,8 +83,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
-
+    @Override
+    public Optional<UUID> changePassword(UUID id, String newPassword) {
+        return userRepository.findById(id).map(existingUser -> {
+            existingUser.setPassword(newPassword);
+            User savedUser = userRepository.save(existingUser);
+            return savedUser.getId();
+        });
+    }
 
 
 }

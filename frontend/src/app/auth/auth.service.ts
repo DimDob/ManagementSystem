@@ -69,7 +69,7 @@ export class AuthService {
     public changePassword(passwordData: { newPassword: any; token: string; }) {
       const body = {
         newPassword: passwordData.newPassword,
-        token: passwordData.token
+        id: passwordData.token
       };
 
       return this.http.put<string>(`${this.environment.host}/${this.authEndpoint}/${this.authChangePasswordEndpoint}`, body, {
