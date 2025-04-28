@@ -1,8 +1,7 @@
 
 # README for Employee Management System
 ### Introduction
-The Employee Management System is a Java-based application designed for handling cash operations such as salary tracking, withdrawal etc. and employee information tracking (adding, removing, editing an employee etc.). It interfaces with a PostgreSQL database to track and store salary transaction details, employee details , ensuring data persistence and integrity. 
-
+The Employee Management System is a Java-based application designed for managing employees & their salaries.
 # Requirements
 ### Database
 ### PostgreSQL 

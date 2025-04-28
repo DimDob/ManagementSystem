@@ -20,7 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "Cash Operations", description = "API for cash operations, balances and employee salaries")
+@Tag(name = "Salary", description = "API for employee salary operations")
 public class SalaryController {
 
     private final SalaryServiceImpl salaryServiceImpl;
