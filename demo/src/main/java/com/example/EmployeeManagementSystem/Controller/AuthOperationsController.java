@@ -26,9 +26,6 @@ import java.util.UUID;
 @Tag(name = "Authentication", description = "API for authentication operations")
 public class AuthOperationsController {
 
-    @Value("${API_KEY}")
-    private String API_KEY;
-
     @Autowired
     private AuthServiceImpl authService;
 

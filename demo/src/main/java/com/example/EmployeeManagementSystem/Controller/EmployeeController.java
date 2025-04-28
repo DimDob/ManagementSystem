@@ -1,13 +1,13 @@
 package com.example.EmployeeManagementSystem.Controller;
 
 import com.example.EmployeeManagementSystem.Entity.Employee;
+import com.example.EmployeeManagementSystem.Service.AuthServiceImpl;
 import com.example.EmployeeManagementSystem.Service.EmployeeServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,18 +25,20 @@ import java.util.UUID;
 @Tag(name = "Employees", description = "API for managing employees")
 public class EmployeeController {
 
-    @Value("${API_KEY}")
-    private String API_KEY;
+    private final AuthServiceImpl authService;
 
     private final EmployeeServiceImpl employeeService;
 
-    public EmployeeController(EmployeeServiceImpl employeeService) {
+    public EmployeeController(AuthServiceImpl authService, EmployeeServiceImpl employeeService) {
+        this.authService = authService;
         this.employeeService = employeeService;
     }
 
     private boolean validateAPIKey(HttpServletRequest request) {
         String apiKey = request.getHeader("FIB-X-AUTH");
-        return API_KEY.equals(apiKey);
+        return authService.getToken()
+                .map(token -> token.equals(apiKey))
+                .orElse(false);
     }
 
     @Operation(summary = "Create a new employee")
@@ -47,9 +49,12 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<String> createEmployee(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                  @Valid @RequestBody Employee employee) {
-        if (!API_KEY.equals(apiKey)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+            }
         }
+
         employeeService.saveEmployee(employee);
         return ResponseEntity.status(HttpStatus.CREATED).body("Employee created successfully!");
     }
@@ -63,8 +68,10 @@ public class EmployeeController {
     @GetMapping("/{id}")
     public ResponseEntity<Employee> getEmployee(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                 @PathVariable UUID id) throws IOException {
-        if (!API_KEY.equals(apiKey)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+            }
         }
 
         Optional<Employee> employee = employeeService.getEmployeeById(id);
@@ -79,8 +86,10 @@ public class EmployeeController {
     })
     @GetMapping
     public ResponseEntity<Optional<List<Employee>>> getAllEmployees(@RequestHeader("FIB-X-AUTH") String apiKey) {
-        if (!API_KEY.equals(apiKey)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+            }
         }
 
         Optional<List<Employee>> employees = employeeService.getAllEmployees();
@@ -97,8 +106,10 @@ public class EmployeeController {
     public ResponseEntity<String> updateEmployee(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                  @PathVariable UUID id,
                                                  @Valid @RequestBody Employee updatedEmployee) {
-        if (!API_KEY.equals(apiKey)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+            }
         }
 
         Optional<Employee> updated = employeeService.updateEmployee(id, updatedEmployee);
@@ -118,8 +129,10 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteEmployee(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                  @PathVariable UUID id) {
-        if (!API_KEY.equals(apiKey)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+            }
         }
 
         Optional<Employee> deleted = employeeService.deleteEmployee(id);

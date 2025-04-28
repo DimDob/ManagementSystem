@@ -1,12 +1,12 @@
 package com.example.EmployeeManagementSystem.Controller;
 
 import com.example.EmployeeManagementSystem.Entity.Employee;
+import com.example.EmployeeManagementSystem.Service.AuthServiceImpl;
 import com.example.EmployeeManagementSystem.Service.SalaryServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,17 +23,20 @@ import java.util.UUID;
 @Tag(name = "Cash Operations", description = "API for cash operations, balances and employee salaries")
 public class SalaryController {
 
-    @Value("${API_KEY}")
-    private String API_KEY;
     private final SalaryServiceImpl salaryServiceImpl;
 
-    public SalaryController(SalaryServiceImpl salaryServiceImpl) {
+    private final AuthServiceImpl authService;
+
+    public SalaryController(SalaryServiceImpl salaryServiceImpl, AuthServiceImpl authService) {
         this.salaryServiceImpl = salaryServiceImpl ;
+        this.authService = authService;
     }
 
     private boolean validateAPIKey(HttpServletRequest request) {
         String apiKey = request.getHeader("FIB-X-AUTH");
-        return API_KEY.equals(apiKey);
+        return authService.getToken()
+                .map(token -> token.equals(apiKey))
+                .orElse(false);
     }
 
     @Operation(summary = "Get an employee's salary by their ID")
@@ -45,8 +48,10 @@ public class SalaryController {
     @GetMapping("/employee/{id}/salary")
     public ResponseEntity<String> getEmployeeSalaryById(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                         @PathVariable UUID id) throws IOException {
-        if (!API_KEY.equals(apiKey)) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Invalid API Key");
+            }
         }
 
         Optional<BigDecimal> employeeSalaryAmountById = salaryServiceImpl.getEmployeeSalaryAmountById(id);
@@ -68,8 +73,10 @@ public class SalaryController {
     public ResponseEntity<String> updateEmployeeSalary(@RequestHeader("FIB-X-AUTH") String apiKey,
                                                        @PathVariable UUID id,
                                                        @RequestBody BigDecimal newSalaryAmount) {
-        if (!API_KEY.equals(apiKey)) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+        if (authService.getToken().isPresent()) {
+            if (!authService.getToken().get().equals(apiKey)) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid API Key");
+            }
         }
 
         Optional<Employee> updatedEmployee = salaryServiceImpl.updateEmployeeSalary(id, newSalaryAmount);
